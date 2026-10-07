@@ -17,7 +17,7 @@ def get_path_fun(table_name: str) -> str:
     # Создаём папку data, если её нет
     os.makedirs(data_dir, exist_ok=True)
 
-    return os.path.join(data_dir, f"{table_name}.json")
+    return os.path.join(data_dir, f"{table_name}")
 
 def load_metadata(filepath: str) -> dict:
     """
