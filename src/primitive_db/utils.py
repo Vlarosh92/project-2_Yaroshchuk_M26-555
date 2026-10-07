@@ -1,5 +1,4 @@
 import json
-import os
 
 
 def load_metadata(filepath: str) -> dict:

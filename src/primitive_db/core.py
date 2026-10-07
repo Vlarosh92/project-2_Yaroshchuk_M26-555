@@ -1,4 +1,4 @@
-from constants import ALLOWED_CHAR, REAL_TYPE, VALID_TYPES
+from constants import ALLOWED_CHAR, VALID_TYPES
 
 
 def create_table(metadata: dict,

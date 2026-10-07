@@ -3,13 +3,33 @@
 создавать и удалять таблицы, с записью по заданным параметрам данных.
 Допускает ввод строковых, целочисленных и булевых значений.
 
-##Список зависимостей
+## Запуск программы
+Установка зависимостей:
+для linux
+===Bash===
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+для windows
+===Bash===
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+Установка и запуск программы:
+===Bash===
+git clone git@github.com:Vlarosh92/project-2_Yaroshchuk_M26-555.git
+cd project-2_Yaroshchuk_M26-555
+uv sync
+uv run database
+
+asciinema:
+https://asciinema.org/connect/cdd521e0-a85e-43a6-b664-73c994e70082
+
+## Список зависимостей
  - requires-python >= 3.12
  - uv_build >= 0.12.23,<0.13.0
  - ruff >= 0.16.10
  - prompt >= 0.4.1
 
-##Работа с таблицами
+## Работа с таблицами
 Для процесса работы с таблицами используются следующие команды
 
 <create_table> - создание таблицы.
@@ -46,6 +66,6 @@ drop_table table_name
 Пример использования:
 list_tables
 
-##Общие команды
-<command> exit - выход из программы
-<command> help - справочная информация
+## Общие команды
+<command> exit - выход из программы;
+<command> help - справочная информация.

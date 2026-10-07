@@ -2,12 +2,12 @@ import shlex
 
 import prompt
 
-
 from constants import (
     META_DATA_FILE_PATH,
     STRING_COMMON_COMMANDS,
     STRING_TABLE_COMMANDS,
 )
+
 from .core import (
     create_table,
     drop_table,
