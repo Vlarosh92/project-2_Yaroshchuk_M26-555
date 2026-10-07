@@ -5,22 +5,19 @@ import os
 def get_path_fun(table_name: str) -> str:
     """
     Функция возвращает путь к файлу в
-    директории data с именем table_name
+    директории data с именем table_name,
+    поднимаясь на 3 уровня выше файла utils.py
     """
-    try:
-        current = os.getcwd()
-        while True:
-            if os.path.isdir(os.path.join(current, "data")):
-                project_root = current
-                break
-            parent = os.path.dirname(current)
-            if parent == current:
-                project_root = current
-                break
-            current = parent
-        return os.path.join(project_root, "data", table_name)
-    except TypeError:
-        print("Ошибка: Неверный тип данных.")
+    # Получаем путь к текущему файлу
+    current_file = __file__
+    print(current_file)
+    # Поднимаемся на 3 уровня вверх до корня проекта от файла utils.py
+    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(current_file))))
+    data_dir = os.path.join(project_root, "data")
+    # Создаём папку data, если её нет
+    os.makedirs(data_dir, exist_ok=True)
+
+    return os.path.join(data_dir, f"{table_name}.json")
 
 def load_metadata(filepath: str) -> dict:
     """
