@@ -1,0 +1,17 @@
+[project]
+name = "primitive-db"
+version = "0.1.0"
+description = "Simple data base project"
+readme = "README.md"
+authors = [
+    { name = "Vladislav Yaroshchuk", email = "yva0906@yandex.com" }
+]
+requires-python = ">=3.12"
+dependencies = []
+
+[project.scripts]
+project = "primitive_db.main:main"
+
+[build-system]
+requires = ["uv_build>=0.12.23,<0.13.0"]
+build-backend = "uv_build"
