@@ -158,7 +158,6 @@ def select(table_data: list[dict],
                       f"Попробуйте снова.")
                 return None
 
-@log_time
 @handle_db_errors
 def update(table_data: list[dict],
            set_clause:  dict[str, int | bool | str],
