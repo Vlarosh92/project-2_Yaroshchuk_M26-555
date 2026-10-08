@@ -28,7 +28,7 @@ uv sync
 uv run database
 
 asciinema:
-https://asciinema.org/a/WiHzWJaamjkAOC1J
+https://asciinema.org/a/wHE0NbOKZ6Z4RwfZ
 
 ## Список зависимостей
  - requires-python >= 3.12
