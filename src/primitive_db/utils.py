@@ -11,7 +11,11 @@ def get_path_fun(table_name: str) -> str:
     # Получаем путь к текущему файлу
     current_file = __file__
     # Поднимаемся на 3 уровня вверх до корня проекта от файла utils.py
-    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(current_file))))
+    project_root = os.path.dirname(
+        os.path.dirname(
+            os.path.dirname(
+                os.path.abspath(current_file))))
+
     data_dir = os.path.join(project_root, "data")
     # Создаём папку data, если её нет
     os.makedirs(data_dir, exist_ok=True)
