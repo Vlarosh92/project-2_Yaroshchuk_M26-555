@@ -9,6 +9,7 @@ from constants import (
     STRING_DATA_COMMANDS,
     STRING_TABLE_COMMANDS,
 )
+from decorators import create_cacher
 
 from .core import (
     create_table,
@@ -57,6 +58,9 @@ def run() -> None:
     print(STRING_DATA_COMMANDS)
     print(STRING_COMMON_COMMANDS)
 
+    # Создаем функцию с замыканием для кеширования
+    cacher = create_cacher()
+
     while True:
 
         meta_data = load_metadata(META_DATA_FILE_PATH)
@@ -104,6 +108,8 @@ def run() -> None:
                     print(f"Таблица \"{args[1]}\" успешно удалена.")
                     save_metadata(META_DATA_FILE_PATH, result)
                     delete_file_from_data(args[1])
+                # обновляем кеш-функцию
+                cacher = create_cacher()
             case "insert":
                 if len(args)<3:
                     print('Ошибка: не задано имя таблицы.')
@@ -129,6 +135,8 @@ def run() -> None:
                           f"\"{table_name}\".")
                     save_table_data(table_name,
                                     table_data)
+                # обновляем кеш-функцию
+                cacher = create_cacher()
             case "select":
                 if len(args)<3:
                     print('Ошибка: не задано имя таблицы.')
@@ -144,16 +152,28 @@ def run() -> None:
                 table_name = data_from_parse_value[0]
                 pretty_table = PrettyTable()
 
-                where_clause = None
                 if len(data_from_parse_value) > 1:
+
                     where_clause = data_from_parse_value[1]
+                    # Формируем уникальное имя ключа по записи
+                    key_wc = list(where_clause.keys())[0]
+                    val_wc = where_clause[key_wc]
+                    cache_key = (f"select_from_{table_name}_where_{key_wc}"
+                                 f"={val_wc}_{type(val_wc)}")
+
+                    # Проверяем что заданное поле существует в таблице
                     if not check_attr_in_meta(where_clause,
                                               meta_data[table_name],
                                               table_name):
                         continue
+                else:
+                    where_clause = None
+                    cache_key = f"select_from_{table_name}_all"
 
-                select_answer = select(load_table_data(table_name),
-                                                      where_clause)
+
+                select_answer = cacher(cache_key,
+                                       lambda: select(load_table_data(table_name),
+                                                      where_clause))
 
                 if select_answer:
                     pretty_table.field_names = list(select_answer[0].keys())
@@ -209,6 +229,8 @@ def run() -> None:
                         print(f"Запись с ID={u_i_l}"
                               f" в таблице \"{table_name}\" успешно обновлена.")
                     save_table_data(table_name, table_data)
+                # обновляем кеш-функцию
+                cacher = create_cacher()
             case "delete":
                 if len(args)<3:
                     print('Ошибка: не задано имя таблицы.')
@@ -252,6 +274,8 @@ def run() -> None:
                               f" успешно удалена из таблицы"
                               f" \"{table_name}\".")
                     save_table_data(table_name, table_data)
+                # обновляем кеш-функцию
+                cacher = create_cacher()
             case "info":
                 if len(args)<2:
                     print('Ошибка: не задано имя таблицы.')
